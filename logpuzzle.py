@@ -29,11 +29,14 @@ def read_urls(filename):
     with open(filename, 'r') as f:
         result = []
         logs = f.read()
-        word_search = re.findall(r'(\S+)(puzzle)(\S+)', logs)
-        for puzzle in word_search:
+        wrd = re.findall(r'\S+puzzle\S+', logs)
+        for puzzle in wrd:
             if puzzle not in result:
                 result.append(puzzle)
-        print(result)
+        print(len(result))
+        result.sort()
+        for i in result:
+            print(i)
 
 
 read_urls('animal_code.google.com')
@@ -47,7 +50,9 @@ def download_images(img_urls, dest_dir):
     to show each local image file.
     Creates the directory if necessary.
     """
-    # +++your code here+++
+    #pass through the data, requesting each url 
+    #send that data with a new name to a directory
+    #creates an index.html file with tags
     pass
 
 
