@@ -14,7 +14,7 @@ HTTP/1.0" 302 528 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US;
 rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"
 """
 
-__author__ = "Kevin Clark with help from Daniel Lomelino"
+__author__ = "Kevin Clark with help from Daniel Lomelino and Joseph Hafed"
 
 import os
 import re
@@ -35,7 +35,7 @@ def read_urls(filename):
     for puzzle in wrd:
         if puzzle not in result:
             result.append(puzzle)
-    result.sort()
+    result.sort(key=lambda x: x[-8:])
     return result
 
 
@@ -62,13 +62,15 @@ def download_images(img_urls, dest_dir):
     if not create_dir_status:
         return -1
 
-    with open('index.html', 'w') as f:
+    with open(f'{dest_dir}/index.html', "w") as f:
         f.write('<html><body>')
         for i, url in enumerate(img_urls):
-                # urllib.request.urlretrieve()
-                #   <img src="img{i}">')
+            urllib.request.urlretrieve(
+                f"https://code.google.com{url}",
+                f"{dest_dir}/img{i}"
+                )
+            f.write(f'<img src="img{i}">')
         f.write('</body></html>')
-        pass
 
 
 def create_parser():
