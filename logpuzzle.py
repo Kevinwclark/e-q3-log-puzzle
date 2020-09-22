@@ -14,10 +14,10 @@ HTTP/1.0" 302 528 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US;
 rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"
 """
 
-import osi
+import os
 import re
 import sys
-import urllib.request
+# import urllib.request
 import argparse
 
 
@@ -26,13 +26,17 @@ def read_urls(filename):
     extracting the hostname from the filename itself, sorting
     alphabetically in increasing order, and screening out duplicates.
     """
-    with open(filename) as f:
+    with open(filename, 'r') as f:
         result = []
-        word = re.search(r'')
-        logs = f.read(filename)
-        for log in logs:
-            if word in log and not in result:
-                result.append(log)
+        logs = f.read()
+        word_search = re.findall(r'(\S+)(puzzle)(\S+)', logs)
+        for puzzle in word_search:
+            if puzzle not in result:
+                result.append(puzzle)
+        print(result)
+
+
+read_urls('animal_code.google.com')
 
 
 def download_images(img_urls, dest_dir):
