@@ -17,7 +17,7 @@ rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"
 import os
 import re
 import sys
-# import urllib.request
+import urllib.request
 import argparse
 
 
@@ -42,6 +42,17 @@ def read_urls(filename):
 read_urls('animal_code.google.com')
 
 
+def create_dir(path):
+    """ checks to see if the dir exists, if not create it"""
+    if not os.path.exists(path):
+        try:
+            os.makedirs(path)
+        except OSError:
+            print(f"creation of dir {path} did not work")
+            return False
+    return True
+
+
 def download_images(img_urls, dest_dir):
     """Given the URLs already in the correct order, downloads
     each image into the given directory.
@@ -50,6 +61,11 @@ def download_images(img_urls, dest_dir):
     to show each local image file.
     Creates the directory if necessary.
     """
+    create_dir_status = create_dir(dest_dir)
+    if not create_dir_status:
+        return -1
+    
+    
     #pass through the data, requesting each url 
     #send that data with a new name to a directory
     #creates an index.html file with tags
