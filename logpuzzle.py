@@ -14,6 +14,8 @@ HTTP/1.0" 302 528 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US;
 rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"
 """
 
+__author__ = "Kevin Clark with help from Daniel Lomelino"
+
 import os
 import re
 import sys
@@ -27,19 +29,14 @@ def read_urls(filename):
     alphabetically in increasing order, and screening out duplicates.
     """
     with open(filename, 'r') as f:
-        result = []
         logs = f.read()
-        wrd = re.findall(r'\S+puzzle\S+', logs)
-        for puzzle in wrd:
-            if puzzle not in result:
-                result.append(puzzle)
-        print(len(result))
-        result.sort()
-        for i in result:
-            print(i)
-
-
-read_urls('animal_code.google.com')
+    result = []
+    wrd = re.findall(r'\S+puzzle\S+', logs)
+    for puzzle in wrd:
+        if puzzle not in result:
+            result.append(puzzle)
+    result.sort()
+    return result
 
 
 def create_dir(path):
@@ -64,12 +61,14 @@ def download_images(img_urls, dest_dir):
     create_dir_status = create_dir(dest_dir)
     if not create_dir_status:
         return -1
-    
-    
-    #pass through the data, requesting each url 
-    #send that data with a new name to a directory
-    #creates an index.html file with tags
-    pass
+
+    with open('index.html', 'w') as f:
+        f.write('<html><body>')
+        for i, url in enumerate(img_urls):
+                # urllib.request.urlretrieve()
+                #   <img src="img{i}">')
+        f.write('</body></html>')
+        pass
 
 
 def create_parser():
